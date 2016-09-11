@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" ng-app="reminder">
+<head>
+    <meta charset="UTF-8">
+    <title>reminder</title>
+    <script src="js/jquery-1.12.3.min.js"></script>
+    <script src="js/angular.js"></script>
+    <script src="js/angular-animate.js"></script>
+    <script src="js/index.js"></script>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body ng-controller="myCtrl">
+<div class="reminder">
+    <div class="reminder-left">
+        <div class="header">
+            <div class="logo"></div>
+            <div class="title">提醒事项</div>
+            <div class="plus">
+                <div class="plus-icon" ng-click="add()"></div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="head">
+                <div class="clock"></div>
+                已计划
+                <div class="line"></div>
+            </div>
+            <ul class="content-list" ng-init="ed=flase">
+                <li ng-repeat="v in database"  ng-class="{active:v==currentlist}" ng-click="setcurrent($index)">
+                    <span ng-class="v.theme"></span>
+                    <input type="text" ng-model="v.title">
+                    <div class="line"></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="reminder-right">
+        <div class="header">
+            <div class="magnifier"></div>
+            搜索所有提醒
+        </div>
+        <div class="content" ng-class="currentlist.theme">
+            <div class="head">
+                <div class="title" ng-bind="currentlist.title"></div>
+                <div class="line"></div>
+                <div class="opation" ng-click="ee=!ee" ng-init="ee=false">选项</div>
+                <div class="color-opations" ng-class="{show:ee}">
+                    <div class="container" >
+                        <input type="text" ng-model="currentlist.title">
+                        <p class="color-lists">列表颜色</p>
+                        <ul class="color-imgs">
+                            <li ng-repeat="v in themes" >
+                                <span class="circle {{v}}" 
+                                 ng-click='currentlist.theme=v';
+                                 ng-class='{active66:v===currentlist.theme}'
+
+                                 ></span>
+                            </li>
+                        </ul>
+                        <span class="delete" ng-click='delete(currentlist.id)'>删除</span>
+                        <span class="quxiao" ng-click="ee=!ee" ng-init="ee=false">取消</span>
+                        <span class="over" ng-click="ee=!ee" ng-init="ee=false">完成</span>
+                    </div>
+                </div>
+            </div>
+            <div class="end" ng-click="eb=!eb" ng-init="eb=false" ng-class="{show:eb}">
+                <div class="threeangle"></div>
+                <div class="finish">已完成{{(currentlist.todos|filter:{isDone:true}).length}}项</div>
+                <div class="line1"></div>
+            </div>
+            <ul class="finish-opation">
+                <li ng-repeat="v in currentlist.todos|filter:{isDone:true}" >
+                    <div class="direct" ng-class="currentlist.theme" ng-click="v.isDone=!v.isDone"></div>
+                    <input ng-model="v.name">
+                    <!--<span ng-bind="v.name"></span>-->
+                    <span class="line1"></span>
+                </li>
+            </ul>
+            <ul class="unfinish-opation">
+                <li ng-repeat="v in currentlist.todos|filter:{isDone:false}">
+                    <div class="direct" ng-class="currentlist.theme" ng-click="v.isDone=!v.isDone"></div>
+                    <input ng-model="v.name">
+                    <!--<span ng-bind="v.name"></span>-->
+                    <div class="line1"></div>
+                </li>
+            </ul>
+            <div class="newadd" ng-click="addxinxi()">
+                新条目
+                <div class="line1" ></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
